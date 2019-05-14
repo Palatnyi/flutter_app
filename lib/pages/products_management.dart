@@ -23,7 +23,7 @@ class ProductsManagement extends StatelessWidget {
                 ListTile(
                   title: Text('all products'),
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, '/');
+                    Navigator.pushReplacementNamed(context, '/products');
                   },
                 )
               ]),

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'pages/products.dart';
 import 'pages/products_management.dart';
-// import 'pages/auth.dart';
+import 'pages/auth.dart';
 import 'pages/product.dart';
 
 void main() {
+  // debugPaintSizeEnabled = true;
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _MyAppState();
   }
 }
@@ -43,7 +44,8 @@ class _MyAppState extends State<MyApp> {
           brightness: Brightness.light),
       // home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => ProductsPage(
+        '/': (BuildContext context) => AuthPage(),
+        '/products': (BuildContext context) => ProductsPage(
               products: _products,
             ),
         '/products-management': (BuildContext context) => ProductsManagement(
