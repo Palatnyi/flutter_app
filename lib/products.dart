@@ -10,7 +10,7 @@ class Products extends StatelessWidget {
       child: Column(children: <Widget>[
         Image.asset(products[index]['image']),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          Expanded(
+          Container(
             child: Text(products[index]['title'],
             style: TextStyle(fontFamily: 'Oswald', fontSize: 26))
           ),
@@ -36,11 +36,16 @@ class Products extends StatelessWidget {
           )
         ),
         ButtonBar(alignment: MainAxisAlignment.center, children: <Widget>[
-          FlatButton(
-            child: Text('Details'),
+          IconButton(
+            icon: Icon(Icons.info),
             onPressed: () {
               Navigator.pushNamed<bool>(context, '/product/$index');
             },
+          ),
+          IconButton(
+            color: Colors.red,
+            icon: Icon(Icons.favorite_border),
+            onPressed: () {},
           )
         ])
       ]),

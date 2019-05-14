@@ -17,6 +17,7 @@ class ProductsPage extends StatelessWidget {
             title: Text('Choose'),
           ),
           ListTile(
+            trailing: Icon(Icons.edit),
             title: Text('manage products'),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/products-management');
@@ -24,7 +25,12 @@ class ProductsPage extends StatelessWidget {
           )
         ]),
       ),
-      appBar: AppBar(title: Text('home page')),
+      appBar: AppBar(
+        title: Text('home page'),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.favorite), onPressed: () {},)
+        ],
+      ),
       body: ProductManager(
         products: products,
         deleteProduct: deleteProduct,

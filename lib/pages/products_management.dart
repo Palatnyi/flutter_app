@@ -21,6 +21,7 @@ class ProductsManagement extends StatelessWidget {
                   title: Text('Choose'),
                 ),
                 ListTile(
+                  trailing: Icon(Icons.shop),
                   title: Text('all products'),
                   onTap: () {
                     Navigator.pushReplacementNamed(context, '/products');
