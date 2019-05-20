@@ -11,14 +11,71 @@ class _AuthPageState extends State<AuthPage> {
   String email;
   String password;
   bool _value = false;
+  final _formKey = GlobalKey<FormState>();
+
+  DecorationImage _buildBackgroundImage() {
+    return DecorationImage(
+      colorFilter:
+          ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+      fit: BoxFit.cover,
+      image: AssetImage('assets/background.jpg'),
+    );
+  }
+
+  Widget _buildEmailTextField() {
+    return TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+            labelText: 'Email', filled: true, fillColor: Colors.white),
+        onSaved: (String value) {
+          email = value;
+        },
+        validator: (String value) {
+          if (!RegExp(
+                  r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+              .hasMatch(value)) {
+            return 'not valid email address';
+          }
+        });
+  }
+
+  Widget _buildPasswordTetField() {
+    return TextFormField(
+        keyboardType: TextInputType.text,
+        obscureText: true,
+        decoration: InputDecoration(
+            labelText: 'password', filled: true, fillColor: Colors.white),
+        onSaved: (String value) {
+          password = value;
+        },
+        validator: (String value) {
+          if (value.isEmpty || value.length < 5) {
+            return 'Pasword must be more then 5 characters';
+          }
+        });
+  }
+
+  Widget _buildAcceptSwitch() {
+    return SwitchListTile(
+        value: _value,
+        title: Text('Accept terms'),
+        onChanged: (bool value) {
+          setState(() {
+            _value = value;
+          });
+        });
+  }
+
+  void onPressed() {
+    print('on pressed');
+    //if (_formKey.currentState.validate() && _value) {
+      //_formKey.currentState.save();
+      Navigator.pushReplacementNamed(context, '/products');
+    //}
+  }
 
   @override
   Widget build(BuildContext context) {
-    Function onPressed =
-        () => Navigator.pushReplacementNamed(context, '/products');
-    if (email == 'a@a.com' && password == '123') {
-      onPressed = () => Navigator.pushReplacementNamed(context, '/products');
-    }
     return Scaffold(
         appBar: AppBar(
             title: Container(
@@ -27,60 +84,28 @@ class _AuthPageState extends State<AuthPage> {
             // alignment: Alignment.centerLeft,
           ),
         )),
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.3), BlendMode.dstATop),
-              fit: BoxFit.cover,
-              image: AssetImage('assets/background.jpg'),
+        body: Form(
+          key: _formKey,
+          child: Container(
+            decoration: BoxDecoration(
+              image: _buildBackgroundImage(),
             ),
-          ),
-          padding: EdgeInsets.all(10.0),
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(children: <Widget>[
-                TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      filled: true,
-                      fillColor: Colors.white
+            padding: EdgeInsets.all(10.0),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(children: <Widget>[
+                  _buildEmailTextField(),
+                  SizedBox(height: 4.5),
+                  _buildPasswordTetField(),
+                  _buildAcceptSwitch(),
+                  Center(
+                    child: RaisedButton(
+                      child: Text('login'),
+                      onPressed: onPressed,
                     ),
-                    onChanged: (String value) {
-                      setState(() {
-                        email = value;
-                      });
-                    }),
-                SizedBox(height: 4.5),
-                TextField(
-                    keyboardType: TextInputType.text,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'password',
-                      filled: true,
-                      fillColor: Colors.white
-                    ),
-                    onChanged: (String value) {
-                      setState(() {
-                        password = value;
-                      });
-                    }),
-                SwitchListTile(
-                    value: _value,
-                    title: Text('Accept terms'),
-                    onChanged: (bool value) {
-                      setState(() {
-                        _value = value;
-                      });
-                    }),
-                Center(
-                  child: RaisedButton(
-                    child: Text('login'),
-                    onPressed: onPressed,
                   ),
-                ),
-              ]),
+                ]),
+              ),
             ),
           ),
         ));
