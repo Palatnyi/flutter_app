@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+import '../scoped_models/main_model.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -44,7 +46,7 @@ class _AuthPageState extends State<AuthPage> {
         keyboardType: TextInputType.text,
         obscureText: true,
         decoration: InputDecoration(
-            labelText: 'password', filled: true, fillColor: Colors.white),
+        labelText: 'password', filled: true, fillColor: Colors.white),
         onSaved: (String value) {
           password = value;
         },
@@ -66,12 +68,25 @@ class _AuthPageState extends State<AuthPage> {
         });
   }
 
-  void onPressed() {
+  void _onPressed(Function login) {
     print('on pressed');
     //if (_formKey.currentState.validate() && _value) {
-      //_formKey.currentState.save();
+      _formKey.currentState.save();
+      login(email: email, password: password);
       Navigator.pushReplacementNamed(context, '/products');
     //}
+  }
+
+  Widget _buildLoginButton() {
+    return ScopedModelDescendant<MainModel>(
+        builder: (BuildContext context, Widget child, MainModel model) {
+          return Center(
+            child: RaisedButton(
+              child: Text('login'),
+              onPressed: () => _onPressed(model.login),
+            ),
+          );
+    });
   }
 
   @override
@@ -98,12 +113,7 @@ class _AuthPageState extends State<AuthPage> {
                   SizedBox(height: 4.5),
                   _buildPasswordTetField(),
                   _buildAcceptSwitch(),
-                  Center(
-                    child: RaisedButton(
-                      child: Text('login'),
-                      onPressed: onPressed,
-                    ),
-                  ),
+                  _buildLoginButton(),
                 ]),
               ),
             ),

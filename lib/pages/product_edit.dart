@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/product.dart';
-import '../models/product.dart';
 
 class ProductsEditPage extends StatefulWidget {
   final Function addProduct;
@@ -87,7 +86,13 @@ class _ProductsEditPageState extends State<ProductsEditPage> {
         imageUrl: 'assets/food.jpg',
       );
       if (widget.product == null) {
-        widget.addProduct(product);
+        widget.addProduct(
+          title: title,
+          description: description,
+          address: address,
+          price: price,
+          imageUrl: 'assets/food.jpg',
+        );
         Navigator.pushReplacementNamed(context, '/products');
       } else {
         widget.updateProduct(product);

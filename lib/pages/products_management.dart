@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import './product_edit.dart';
 import './products_list.dart';
-import '../scoped_models/product_model.dart';
+import '../scoped_models/main_model.dart';
 
 class ProductsManagement extends StatelessWidget {
-
   Widget _buildSideDrawer(BuildContext context) {
     return Drawer(
       child: Column(children: <Widget>[
@@ -26,8 +25,8 @@ class ProductsManagement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<ProductModel>(
-        builder: (BuildContext context, Widget child, ProductModel model) {
+    return ScopedModelDescendant<MainModel>(
+        builder: (BuildContext context, Widget child, MainModel model) {
       return DefaultTabController(
           length: 2,
           child: Scaffold(
@@ -43,7 +42,8 @@ class ProductsManagement extends StatelessWidget {
               ),
               body: TabBarView(children: <Widget>[
                 ProductsEditPage(addProduct: model.addProduct),
-                ProductsListPage(model.products, model.updateProduct, model.deleteProduct)
+                ProductsListPage(
+                    model.products, model.updateProduct, model.deleteProduct)
               ])));
     });
   }

@@ -8,7 +8,7 @@ import 'pages/product.dart';
 
 import 'models/product.dart';
 
-import './scoped_models/product_model.dart';
+import './scoped_models/main_model.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
@@ -25,8 +25,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<ProductModel>(
-        model: ProductModel(),
+    return ScopedModel<MainModel>(
+        model: MainModel(),
         child: MaterialApp(
           // debugShowMaterialGrid: true,
           theme: ThemeData(
@@ -49,8 +49,8 @@ class _MyAppState extends State<MyApp> {
             if (pathElements[1] == 'product') {
               final int index = int.parse(pathElements[2]);
               return MaterialPageRoute<bool>(builder: (BuildContext context) {
-                return ScopedModelDescendant<ProductModel>(builder:
-                    (BuildContext context, Widget child, ProductModel model) {
+                return ScopedModelDescendant<MainModel>(builder:
+                    (BuildContext context, Widget child, MainModel model) {
                         Product _model = model.products[index];
 
                       return ProductPage(_model.title, _model.imageUrl, _model.description, _model.address, _model.price);

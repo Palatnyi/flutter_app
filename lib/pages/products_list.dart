@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import '../scoped_models/product_model.dart';
+import '../scoped_models/main_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 import './product_edit.dart';
 import '../models/product.dart';
@@ -22,7 +22,7 @@ class ProductsListPage extends StatelessWidget {
           return ProductsEditPage(
               product: product,
               updateProduct: (updatedProduct) {
-                updateProduct(index, model.updatedProduct);
+                updateProduct(index, updatedProduct);
               });
         }));
       },
@@ -31,8 +31,8 @@ class ProductsListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<ProductModel>(
-        builder: (BuildContext context, Widget child, ProductModel model) {
+    return ScopedModelDescendant<MainModel>(
+        builder: (BuildContext context, Widget child, MainModel model) {
       return ListView.builder(
         itemCount: model.products.length,
         itemBuilder: (BuildContext context, int index) {
