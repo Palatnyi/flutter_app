@@ -84,6 +84,7 @@ class _ProductsEditPageState extends State<ProductsEditPage> {
         address: address,
         price: price,
         imageUrl: 'assets/food.jpg',
+        id: widget.product.id
       );
       if (widget.product == null) {
         widget.addProduct(
@@ -95,7 +96,14 @@ class _ProductsEditPageState extends State<ProductsEditPage> {
         );
         Navigator.pushReplacementNamed(context, '/products');
       } else {
-        widget.updateProduct(product);
+        widget.updateProduct(
+          title: title,
+          description: description,
+          address: address,
+          price: price,
+          imageUrl: 'assets/food.jpg',
+          id: widget.product.id
+        );
       }
     }
   }

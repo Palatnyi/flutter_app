@@ -8,17 +8,17 @@ class Product {
   final double price;
   bool isFavourite = false;
 
-  String id;
+  String userId;
   String email;
+  String id;
 
-  Product({
-    @required this.title,
-    @required this.description,
-    this.address,
-    @required this.price,
-    @required this.imageUrl,
-    this.isFavourite = false,
-    @required this.id,
-    @required this.email
-  });
+  Product({@required this.title,
+      @required this.description,
+      this.address,
+      @required this.price,
+      @required this.imageUrl,
+      this.isFavourite = false,
+      @required this.userId,
+      @required this.email,
+      @required this.id});
 }

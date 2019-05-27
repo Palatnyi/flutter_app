@@ -41,7 +41,10 @@ class ProductsManagement extends StatelessWidget {
                 ),
               ),
               body: TabBarView(children: <Widget>[
-                ProductsEditPage(addProduct: model.addProduct),
+                ProductsEditPage(
+                  addProduct: model.addProduct,
+                  updateProduct: model.updateProduct
+                ),
                 ProductsListPage(
                     model.products, model.updateProduct, model.deleteProduct)
               ])));
