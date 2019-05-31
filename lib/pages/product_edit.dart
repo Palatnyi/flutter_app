@@ -3,7 +3,7 @@ import '../models/product.dart';
 
 class ProductsEditPage extends StatefulWidget {
   final Function addProduct;
-  final Function updateProduct;
+  final dynamic updateProduct;
   final Product product;
   ProductsEditPage({this.addProduct, this.product, this.updateProduct});
 
@@ -75,19 +75,12 @@ class _ProductsEditPageState extends State<ProductsEditPage> {
     );
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      Product product = Product(
-        title: title,
-        description: description,
-        address: address,
-        price: price,
-        imageUrl: 'assets/food.jpg',
-        id: widget.product.id
-      );
+
       if (widget.product == null) {
-        widget.addProduct(
+        await widget.addProduct(
           title: title,
           description: description,
           address: address,
@@ -96,14 +89,15 @@ class _ProductsEditPageState extends State<ProductsEditPage> {
         );
         Navigator.pushReplacementNamed(context, '/products');
       } else {
-        widget.updateProduct(
-          title: title,
-          description: description,
-          address: address,
-          price: price,
-          imageUrl: 'assets/food.jpg',
-          id: widget.product.id
+        await widget.updateProduct(
+          title,
+          description,
+          address,
+          price,
+          'assets/food.jpg',
+          widget.product.id
         );
+        Navigator.pop(context);
       }
     }
   }

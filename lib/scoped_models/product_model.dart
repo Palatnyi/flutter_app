@@ -14,12 +14,14 @@ mixin ProductModel on ConnectedModel {
     return List.from(_products);
   }
 
-  void fetchProducts() {
-    http
-        .get('https://flutter-project-d3ff6.firebaseio.com/products.json')
-        .then((http.Response response) {
+  Future<Null> fetchProducts() async {
+    http.Response response = await http.get('https://flutter-project-d3ff6.firebaseio.com/products.json');
       List<Product> productList = [];
       final Map<String, dynamic> productsData = json.decode(response.body);
+      print(productsData);
+      if(productsData == null) {
+        return Future.value();
+      }
       productsData.forEach((id, product) {
         Product _product = Product(
             title: product['title'],
@@ -34,10 +36,10 @@ mixin ProductModel on ConnectedModel {
       });
       _products = productList;
       notifyListeners();
-    });
+      return Future.value();
   }
 
-  void addProduct({title, description, address, price, imageUrl}) {
+  void addProduct({title, description, address, price, imageUrl}) async {
     Map<String, dynamic> _product = {
       'title': title,
       'description': description,
@@ -46,20 +48,16 @@ mixin ProductModel on ConnectedModel {
       'imageUrl': imageUrl
     };
 
-    http
-        .post('https://flutter-project-d3ff6.firebaseio.com/products.json',
-            body: json.encode(_product))
-        .then((http.Response response) {
-      fetchProducts();
-    });
+    await http.post('https://flutter-project-d3ff6.firebaseio.com/products.json', body: json.encode(_product));
+    await fetchProducts();
   }
 
-  void deleteProduct(int index) {
-    _products.removeAt(index);
-    notifyListeners();
+  void deleteProduct(String id) async {
+    await http.delete('https://flutter-project-d3ff6.firebaseio.com/products/$id.json');
+    await fetchProducts();
   }
 
-  void updateProduct(title, description, address, price, imageUrl, id) {
+  void updateProduct(title, description, address, price, imageUrl, id) async {
     Map<String, dynamic> _product = {
       'title': title,
       'description': description,
@@ -68,11 +66,8 @@ mixin ProductModel on ConnectedModel {
       'imageUrl': imageUrl
     };
 
-    http
-        .put('https://flutter-project-d3ff6.firebaseio.com/products/${id}.json')
-        .then((http.Response response) {
-      fetchProducts();
-    });
+    await http.put('https://flutter-project-d3ff6.firebaseio.com/products/$id.json', body: json.encode(_product));
+    await fetchProducts();
   }
 
   void toggleFavourite(int index) {

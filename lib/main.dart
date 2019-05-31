@@ -23,8 +23,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final MainModel model = MainModel();
   @override
-  final model = MainModel();
   Widget build(BuildContext context) {
     return ScopedModel<MainModel>(
         model: model,

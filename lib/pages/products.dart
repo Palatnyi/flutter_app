@@ -15,6 +15,8 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
+
+  @override
   void initState() {
     widget.model.fetchProducts();
   }
@@ -52,8 +54,7 @@ class _ProductsPageState extends State<ProductsPage> {
             )
           ],
         ),
-        body: Products(products: model.products),
-      );
-    });
+        body: Products(products: model.products, fetchProducts: model.fetchProducts)
+    );});
   }
 }

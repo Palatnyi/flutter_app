@@ -6,13 +6,8 @@ import './product_edit.dart';
 import '../models/product.dart';
 
 class ProductsListPage extends StatelessWidget {
-  final Function updateProduct;
-  final Function deleteProduct;
-  final List<Product> products;
 
-  ProductsListPage(this.products, this.updateProduct, this.deleteProduct);
-
-  Widget _iconButton(BuildContext context, int index, model) {
+  Widget _iconButton(BuildContext context, int index, MainModel model) {
     return IconButton(
       icon: Icon(Icons.edit),
       onPressed: () {
@@ -21,9 +16,8 @@ class ProductsListPage extends StatelessWidget {
             MaterialPageRoute(builder: (BuildContext context) {
           return ProductsEditPage(
               product: product,
-              updateProduct: (updatedProduct) {
-                updateProduct(index, updatedProduct);
-              });
+              updateProduct:  model.updateProduct
+            );
         }));
       },
     );
@@ -40,8 +34,7 @@ class ProductsListPage extends StatelessWidget {
             key: Key(model.products[index].title),
             onDismissed: (DismissDirection direction) {
               if (direction == DismissDirection.endToStart) {
-                print(deleteProduct);
-                model.deleteProduct(index);
+                model.deleteProduct(model.products[index].id);
               }
             },
             background: Container(color: Colors.red),

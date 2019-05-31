@@ -50,7 +50,12 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Column(children: <Widget>[
-        Image.asset(product.imageUrl),
+        FadeInImage.assetNetwork(
+          fit: BoxFit.cover,
+          height:300.0,
+          placeholder: product.imageUrl,
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV3fpQJqFpX0-prkDmVVowjANSeRPvegwUrdR46oeHSdxQnuDx'
+        ),
         _buildTitlePriceRow(),
         AddressTag(product.address),
         _buildButtonBar(context)
