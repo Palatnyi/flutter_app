@@ -13,8 +13,9 @@ mixin UserModel on ConnectedModel {
     };
     http.Response resp = await http.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyD9oH-z4eEshhK8SRjRyNepnl8uMJACMCk', body: json.encode(signUpInfo));
     Map<String, dynamic> respData = json.decode(resp.body);
-    authenticatedUser = User(id: respData['localId'], email: respData['email'], password: password);
     if(json.decode(resp.body).containsKey('idToken')){
+
+      authenticatedUser = User(id: respData['localId'], email: email, password: password, idToken: json.decode(resp.body)['idToken']);
       return Future.value(true);
     }
     return Future.value(false);

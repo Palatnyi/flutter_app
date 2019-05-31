@@ -15,7 +15,7 @@ mixin ProductModel on ConnectedModel {
   }
 
   Future<Null> fetchProducts() async {
-    http.Response response = await http.get('https://flutter-project-d3ff6.firebaseio.com/products.json');
+    http.Response response = await http.get('https://flutter-project-d3ff6.firebaseio.com/products.json?auth=${authenticatedUser.idToken}');
       List<Product> productList = [];
       final Map<String, dynamic> productsData = json.decode(response.body);
       print(productsData);
@@ -48,7 +48,7 @@ mixin ProductModel on ConnectedModel {
       'imageUrl': imageUrl
     };
 
-    await http.post('https://flutter-project-d3ff6.firebaseio.com/products.json', body: json.encode(_product));
+    await http.post('https://flutter-project-d3ff6.firebaseio.com/products.json?auth=${authenticatedUser.idToken}', body: json.encode(_product));
     await fetchProducts();
   }
 
@@ -66,7 +66,7 @@ mixin ProductModel on ConnectedModel {
       'imageUrl': imageUrl
     };
 
-    await http.put('https://flutter-project-d3ff6.firebaseio.com/products/$id.json', body: json.encode(_product));
+    await http.put('https://flutter-project-d3ff6.firebaseio.com/products/$id.json?auth=${authenticatedUser.idToken}', body: json.encode(_product));
     await fetchProducts();
   }
 
